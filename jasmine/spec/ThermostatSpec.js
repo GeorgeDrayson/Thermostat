@@ -61,18 +61,25 @@ describe("Thermostat", function() {
   describe('Thermostat power saving function', function() {
 
     it('Should be on automatically', function() {
-      expect(thermostat.isPowerSavingOn()).toEqual(true)
+      expect(thermostat.isPowerSavingOn()).toEqual('on')
     });
 
     it('Should switch to off when the switch method is called', function() {
       thermostat.switch()
-      expect(thermostat.isPowerSavingOn()).toEqual(false)
+      expect(thermostat.isPowerSavingOn()).toEqual('off')
     });
 
     it('Should switch back to true when the switch method is called again', function() {
       thermostat.switch()
       thermostat.switch()
-      expect(thermostat.isPowerSavingOn()).toEqual(true)
+      expect(thermostat.isPowerSavingOn()).toEqual('on')
+    });
+
+    it('Should switch the temp down to 25 if you are above it', function() {
+      thermostat.switch()
+      thermostat.up(10)
+      thermostat.switch()
+      expect(thermostat.getTemperature()).toEqual(25)
     });
 
   });
